@@ -64,17 +64,17 @@ num_adjs=${#adj[*]}
 num_nouns=${#noun[*]}
 
 # print ngrok on login
-if grep --quiet LOCAL_BASE_URL /home/vagrant/.profile; then
+if grep --quiet AC_BASE_URL /home/vagrant/.profile; then
 echo "Using existing .profile settings"
 else
 cat <<EOF >> /home/vagrant/.profile
-export DEV_KEY="${adj[$((RANDOM%num_adjs))]}-${noun[$((RANDOM%num_nouns))]}-$((RANDOM%10000))"
+export AC_ADDON_KEY="${adj[$((RANDOM%num_adjs))]}-${noun[$((RANDOM%num_nouns))]}-$((RANDOM%10000))"
 export AC_BASE_URL=`grep "Tunnel established" /var/log/ngrok.log | tail -1 | sed 's/.*Tunnel established at //g'`
 echo -e '\e[1m'
 grep "Tunnel established" /var/log/ngrok.log | tail -1 | sed 's/.*Tunnel/Tunnel/g'
 echo
 tput sgr0
-echo "Run 'cd project && python web.py' to start your add-on."
+echo "Run 'cd project && AC_BASE_URL=\$AC_BASE_URL python web.py' to start your add-on."
 echo
 EOF
 fi
