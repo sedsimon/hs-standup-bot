@@ -49,28 +49,39 @@ service monit restart
 sleep 2
 monit monitor all
 
-# start Mongo
-# service mongod restart
-# service redis-server restart
-
-
 # set vim tabs
 cat <<EOF > /home/vagrant/.vimrc
 set tabstop=4
 EOF
 chown vagrant.vagrant /home/vagrant/.vimrc
 
-# Print ngrok on login
+
+adjs=("autumn hidden bitter misty silent empty dry dark summer icy delicate quiet white cool spring winter patient twilight dawn crimson wispy weathered blue billowing broken cold damp falling frosty green long late lingering bold little morning muddy old red rough still small sparkling throbbing shy wandering withered wild black young holy solitary fragrant aged snowy proud floral restless divine polished ancient purple lively nameless")
+nouns=("waterfall river breeze moon rain wind sea morning snow lake sunset pine shadow leaf dawn glitter forest hill cloud meadow sun glade bird brook butterfly bush dew dust field fire flower firefly feather grass haze mountain night pond darkness snowflake silence sound sky shape surf thunder violet water wildflower wave water resonance sun wood dream cherry tree fog frost voice paper frog smoke star")
+adj=($adjs)
+noun=($nouns)
+num_adjs=${#adj[*]}
+num_nouns=${#noun[*]}
+
+# print ngrok on login
+if grep --quiet LOCAL_BASE_URL /home/vagrant/.profile; then
+echo "Using existing .profile settings"
+else
 cat <<EOF >> /home/vagrant/.profile
+export DEV_KEY="${adj[$((RANDOM%num_adjs))]}-${noun[$((RANDOM%num_nouns))]}-$((RANDOM%10000))"
+export AC_BASE_URL=`grep "Tunnel established" /var/log/ngrok.log | tail -1 | sed 's/.*Tunnel established at //g'`
 echo -e '\e[1m'
 grep "Tunnel established" /var/log/ngrok.log | tail -1 | sed 's/.*Tunnel/Tunnel/g'
 echo
 tput sgr0
-echo "Run 'cd project && python app.py' to start your application."
+echo "Run 'cd project && python web.py' to start your add-on."
 echo
 EOF
+fi
 
-# Install project dependencies
-pip install -U -r /home/vagrant/project/requirements.txt
+# install project node_modules
+su - vagrant
+cd /home/vagrant/project
+pip install -U -r requirements.txt
 
 
