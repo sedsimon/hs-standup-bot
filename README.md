@@ -1,7 +1,7 @@
 # What is this?
 
 This is a basic project that demonstrates how to quickly get started developing a HipChat integration using 
-[ac-flask-hipchat](https://bitbucket.org/mrdon/ac-flask-hipchat).
+[ac-flask-hipchat](https://bitbucket.org/atlassianlabs/ac-flask-hipchat).
 
 It uses a basic [Vagrant](https://www.vagrantup.com) configuration to provide one option for quickly getting started 
 with a basic setup using the following dependencies:
@@ -17,7 +17,7 @@ Make sure that you have both [Vagrant](https://www.vagrantup.com/downloads.html)
 [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed, then start by cloning this project from git:
 
 ```
-git clone https://bitbucket.org/mrdon/ac-flask-hipchat-vagrant hipchat-example
+git clone https://bitbucket.org/atlassianlabs/ac-flask-hipchat-vagrant hipchat-example
 ```
 
 You'll also need to install [Vagrant](https://www.vagrantup.com).  When that's done, run the following commands:
