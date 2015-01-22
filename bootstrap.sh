@@ -23,6 +23,7 @@ apt-get install unzip -y 2> /dev/null
 apt-get install -y vim curl 2> /dev/null
 
 # Python things
+apt-get install -y build-essential python-dev 2> /dev/null
 apt-get install -y python-pip 2> /dev/null
 
 # install ngrok
