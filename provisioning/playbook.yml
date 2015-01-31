@@ -1,0 +1,78 @@
+# ansible playbook
+---
+- hosts: vagrant
+  user: vagrant
+  sudo: yes
+  tasks:
+    - name: update apt key
+      apt_key: keyserver=keyserver.ubuntu.com id=7F0CEB10 state=present
+
+    - name: update mongo apt src list
+      shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+
+    - name: install redis
+      apt: name=redis-server update_cache=yes
+
+    - name: install mongo
+      apt: name=mongodb-org
+
+    - name: install ntp
+      apt: name=ntp
+
+    - name: restart ntp
+      service: name=ntp state=restarted
+
+    - name: install monit
+      apt: name=monit
+
+    - name: install unzip
+      apt: name=unzip
+
+    - name: install vim
+      apt: name=vim
+
+    - name: install curl
+      apt: name=curl
+
+    - name: install build-essential
+      apt: name=build-essential
+
+    - name: install python-dev
+      apt: name=python-dev
+
+    - name: install python-pip
+      apt: name=python-pip
+
+    - name: get ngrok
+      command: wget -qO /tmp/ngrok.zip https://dl.ngrok.com/linux_386/ngrok.zip creates=/tmp/ngrok.zip
+
+    - name: expand ngrok
+      command: unzip /tmp/ngrok.zip -d /tmp creates=/tmp/ngrok
+
+    - name: install ngrok
+      command: mv /tmp/ngrok /usr/local/bin/ngrok creates=/usr/local/bin/ngrok
+
+    - name: configure monit for ngrok
+      copy: src=monit.ngrok.conf dest=/etc/monit/conf.d/ngrok
+
+    - name: restart monit
+      service: name=monit state=restarted
+
+    - name: wait for monit
+      command: sleep 2
+
+    - name: start monitoring
+      command: monit monitor all
+
+    - name: set vim tabs
+      copy: src=vimrc dest=/home/vagrant/.vimrc
+
+    - name: set .vimrc perms
+      command: chown vagrant.vagrant /home/vagrant/.vimrc
+
+#    - name: run bootstrap.sh
+#      script: bootstrap.sh
+#      register: bootstrap
+
+#    - debug: var=bootstrap.stdout_lines
+

@@ -1,60 +1,55 @@
 #!/bin/bash
 
 # repos
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+#echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
 
 # init
-apt-get update 2> /dev/null
+#apt-get update 2> /dev/null
 
 # redis
-apt-get install -y redis-server 2> /dev/null
+#apt-get install -y redis-server 2> /dev/null
 
 # Mongo
-apt-get install mongodb-org -y 2> /dev/null
+#apt-get install mongodb-org -y 2> /dev/null
 
 # ntp
-apt-get install ntp -y 2> /dev/null
-service ntp restart
+#apt-get install ntp -y 2> /dev/null
+#service ntp restart
 
 # install dependencies and services
-apt-get install monit -y 2> /dev/null
-apt-get install unzip -y 2> /dev/null
-apt-get install -y vim curl 2> /dev/null
+#apt-get install monit -y 2> /dev/null
+#apt-get install unzip -y 2> /dev/null
+#apt-get install -y vim curl 2> /dev/null
 
 # Python things
-apt-get install -y build-essential python-dev 2> /dev/null
-apt-get install -y python-pip 2> /dev/null
+#apt-get install -y build-essential python-dev 2> /dev/null
+#apt-get install -y python-pip 2> /dev/null
 
 # install ngrok
-wget -qO /tmp/ngrok.zip https://dl.ngrok.com/linux_386/ngrok.zip
-unzip /tmp/ngrok.zip
-mv ngrok /usr/local/bin/ngrok
+# wget -qO /tmp/ngrok.zip https://dl.ngrok.com/linux_386/ngrok.zip
+# unzip /tmp/ngrok.zip
+# mv ngrok /usr/local/bin/ngrok
 
 # configure monit
-cat <<EOF > /etc/monit/conf.d/ngrok
-set httpd port 5150 and
-    use address localhost
-    allow localhost
-
-set daemon 30
-#with start delay 5
-
-check process ngrok matching "/usr/local/bin/ngrok"
-    start program = "/bin/bash -c '2>&1 1>>/var/log/ngrok.log /usr/local/bin/ngrok -log=stdout 5000'"
-    stop program = "/usr/bin/killall ngrok"
-EOF
+#cat <<EOF > /etc/monit/conf.d/ngrok
+#set httpd port 5150 and
+#    use address localhost
+#    allow localhost
+#
+#set daemon 30
+##with start delay 5
+#
+#check process ngrok matching "/usr/local/bin/ngrok"
+#    start program = "/bin/bash -c '2>&1 1>>/var/log/ngrok.log /usr/local/bin/ngrok -log=stdout 5000'"
+#    stop program = "/usr/bin/killall ngrok"
+#EOF
 
 # restart monit service
-service monit restart
-sleep 2
-monit monitor all
+#service monit restart
+#sleep 2
+#monit monitor all
 
-# set vim tabs
-cat <<EOF > /home/vagrant/.vimrc
-set tabstop=4
-EOF
-chown vagrant.vagrant /home/vagrant/.vimrc
 
 
 adjs=("autumn hidden bitter misty silent empty dry dark summer icy delicate quiet white cool spring winter patient twilight dawn crimson wispy weathered blue billowing broken cold damp falling frosty green long late lingering bold little morning muddy old red rough still small sparkling throbbing shy wandering withered wild black young holy solitary fragrant aged snowy proud floral restless divine polished ancient purple lively nameless")
