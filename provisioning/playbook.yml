@@ -70,9 +70,12 @@
     - name: set .vimrc perms
       command: chown vagrant.vagrant /home/vagrant/.vimrc
 
-#    - name: run bootstrap.sh
-#      script: bootstrap.sh
-#      register: bootstrap
+    - name: run profile_config.sh
+      script: profile_config.sh
+      register: profile_config
 
-#    - debug: var=bootstrap.stdout_lines
+    - debug: var=profile_config.stdout_lines
+
+    - name: install python requirements
+      pip: requirements=requirements.txt chdir=/home/vagrant/project state=latest
 

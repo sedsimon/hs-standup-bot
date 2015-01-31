@@ -76,8 +76,8 @@ EOF
 fi
 
 # install project node_modules
-su - vagrant
-cd /home/vagrant/project
-pip install -U -r requirements.txt
+#su - vagrant
+#cd /home/vagrant/project
+#pip install -U -r requirements.txt
 
 
