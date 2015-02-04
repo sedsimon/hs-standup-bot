@@ -20,7 +20,7 @@ Make sure that you have both [Vagrant](https://www.vagrantup.com/downloads.html)
 git clone https://bitbucket.org/atlassianlabs/ac-flask-hipchat-vagrant hipchat-example
 ```
 
-You'll also need to install [Vagrant](https://www.vagrantup.com).  When that's done, run the following commands:
+You'll also need to install [Vagrant](https://www.vagrantup.com) and [Ansible](https://www.ansible.com).  When that's done, run the following commands:
 
 ```
 > cd /path/to/hipchat-example
